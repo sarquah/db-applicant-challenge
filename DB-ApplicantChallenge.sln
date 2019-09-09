@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.779
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB-ApplicantChallenge", "DB-ApplicantChallenge\DB-ApplicantChallenge.csproj", "{4651407E-1ABE-4BB1-AF86-DD36AD486230}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4651407E-1ABE-4BB1-AF86-DD36AD486230}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4651407E-1ABE-4BB1-AF86-DD36AD486230}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4651407E-1ABE-4BB1-AF86-DD36AD486230}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4651407E-1ABE-4BB1-AF86-DD36AD486230}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5B1E30F7-7C8B-4531-A1D1-69112A3339E8}
+	EndGlobalSection
+EndGlobal
