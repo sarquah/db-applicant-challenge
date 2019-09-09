@@ -16,11 +16,9 @@ namespace DB_ApplicantChallenge
         {
             return null;
         }
-        public List<Node> readFile()
+        public List<Node> readFile(string path)
         {
-            List<Node> directGraph = new List<Node>();
-            string[] lines = System.IO.File.ReadAllLines(
-                @"C:\Users\g3n3s\source\repos\DB-ApplicantChallenge\DB-ApplicantChallenge\SampleInput.txt");
+            string[] lines = System.IO.File.ReadAllLines(path);
             for (int lineIndex = 0; lineIndex < lines.Length; lineIndex++)
             {
                 string[] numbers = lines[lineIndex].Split(SPACE);
@@ -32,24 +30,10 @@ namespace DB_ApplicantChallenge
                     {
                         // Read next line
                         string[] nextLineNumbers = lines[lineIndex + 1].Split(SPACE);
-                        Node child1 = new Node(Int32.Parse(nextLineNumbers[numberIndex]));
-                        node.Children.Add(child1);
-                        Node child2 = new Node(Int32.Parse(nextLineNumbers[numberIndex + 1]));
-                        node.Children.Add(child2);
-                        //Console.Write($"\t {node.Value} \tChildren: {node.Children[0].Value}, {node.Children[1].Value} -");
+                        node.Left = new Node(Int32.Parse(nextLineNumbers[numberIndex]));
+                        node.Right = new Node(Int32.Parse(nextLineNumbers[numberIndex + 1]));                        
                     }
-                    directGraph.Add(node);
                 }
-                //Console.WriteLine();
-            }
-            foreach(var node in directGraph)
-            {
-                string children="";
-                foreach(var child in node.Children)
-                {
-                    children += child.Value+",";
-                }
-                Console.WriteLine($"{node.Value} - Children: {children}");
             }
             Console.WriteLine("Press any key to exit.");
             Console.ReadKey();

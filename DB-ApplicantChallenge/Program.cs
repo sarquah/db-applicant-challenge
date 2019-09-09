@@ -7,7 +7,7 @@ namespace DB_ApplicantChallenge
         static void Main(string[] args)
         {
             DirectedGraphSearch dgs = new DirectedGraphSearch();
-            dgs.readFile();
+            dgs.readFile(@"C:\Users\g3n3s\source\repos\DB-ApplicantChallenge\DB-ApplicantChallenge\SampleInput.txt");
         }
     }
 }
