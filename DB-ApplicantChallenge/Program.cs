@@ -6,7 +6,8 @@ namespace DB_ApplicantChallenge
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            DirectedGraphSearch dgs = new DirectedGraphSearch();
+            dgs.readFile();
         }
     }
 }
