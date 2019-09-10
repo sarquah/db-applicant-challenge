@@ -8,107 +8,55 @@ namespace DB_ApplicantChallenge
     {
         private const string SPACE = " ";
         private Node root;
-        private Node previousNode;
+        private List<Node> unorderedInput;
+        private string[] fileContent;
 
         public Pyramid()
         {
             root = null;
+            unorderedInput = new List<Node>();
         }
-        public List<Node> ReadFile(string path)
+        public void ReadFile(string path)
         {
-            string[] lines = System.IO.File.ReadAllLines(path);
-            for (int currentLineNumber = 0; currentLineNumber < lines.Length; currentLineNumber++)
-            {
-                string[] nextLine = null;
-                if ((currentLineNumber + 1) < lines.Length)
-                {
-                    nextLine = lines[currentLineNumber + 1].Split(SPACE);
-                }                
-                ReadLine(lines[currentLineNumber], nextLine, currentLineNumber);
-            }
+            fileContent = System.IO.File.ReadAllLines(path);
+            string[] numbers = ReadLine(0);
+            AddNodes(numbers);
             Console.WriteLine("Press any key to exit.");
-            return null;
         }
 
-        private void ReadLine(string currentLine, string[] nextLine, int currentLineNumber)
+        private string[] ReadLine(int lineNumber)
         {
-            string[] numbers = currentLine.Split(SPACE);
-            int leftValue = -1;
-            int rightValue = -1;
+            return fileContent[lineNumber].Split(SPACE);
+        }
+
+        private void AddNodes(string[] numbers)
+        { 
             int number = -1;
-            for (int numberIndex = 0; numberIndex < numbers.Length; numberIndex++)
-            {
-                number = Int32.Parse(numbers[numberIndex]);
-                if (nextLine != null)
-                {
-                    leftValue = Int32.Parse(nextLine[numberIndex]);
-                    rightValue = Int32.Parse(nextLine[numberIndex + 1]);
-                }
-                Node node = CreateNode(number, nextLine, leftValue, rightValue, currentLineNumber);
-                InsertNode(node);
-            }
-        }
-
-        private void InsertNode(Node node)
-        {
-            if (root == null)
-            {
-                root = node;
-                previousNode = node;
-            }
-            else
-            {
-                if (root.Left.Value == node.Value)
-                {
-                    root.Left = node;
-                }
-                else if (root.Right.Value == node.Value)
-                {
-                    root.Right = node;
-                }
-            }
-        }
-
-        private Node CreateNode(int number, string[] nextLine, int leftValue, int rightValue, int currentLineNumber)
-        {            
+            number = Int32.Parse(numbers[0]);
             Node node = new Node(number);
-            if (leftValue > -1)
-            {              
-                node.Left = new Node(leftValue);
-                node.Right = new Node(rightValue);
+            string[] nextLine = null;
+            for (int lineNumber = 1; lineNumber < numbers.Length; lineNumber++)
+            {
+                nextLine = ReadLine(lineNumber);
+                node = AddChildren(nextLine, 0, lineNumber, node);
+                if (root==null)
+                {
+                    root = node;
+                }
             }
-            //if (root == null)
-            //{
-            //    root = node;
-            //}
-            //else
-            //{
-            //    AddChild(node, currentLineNumber);
-            //}
-            return node;
         }
 
-        private void AddChild(Node node, int currentLineNumber)
+        private Node AddChildren(string[] nextLine, int numberIndex, int lineNumber, Node parent)
         {
-            Node currentNode = root;
-            for (int depth=0; depth < currentLineNumber;depth++)
-            {                
-                if (currentLineNumber == 1)
-                {
-                    if (root.Left.Value == node.Value)
-                    {
-                        root.Left = node;
-                    }
-                    else if (root.Right.Value == node.Value)
-                    {
-                        root.Right = node;
-                    }
-                }
-                else
-                {
+            int number = Int32.Parse(nextLine[numberIndex]);
+            Node child1 = new Node(number);
+            parent.Children.Add(child1);
 
-                }
-            }
+            number = Int32.Parse(nextLine[numberIndex + 1]);
+            Node child2 = new Node(number);
+            parent.Children.Add(child2);
+
+            return parent;
         }
     }
 }
