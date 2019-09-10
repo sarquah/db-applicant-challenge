@@ -7,20 +7,19 @@ namespace DB_ApplicantChallenge
     class Pyramid
     {
         private const string SPACE = " ";
-        private Node root;
-        private List<Node> unorderedInput;
+        private List<int> path;
         private string[] fileContent;
+        private bool even;
 
         public Pyramid()
         {
-            root = null;
-            unorderedInput = new List<Node>();
+            path = new List<int>();
+            even = false;
         }
         public void ReadFile(string path)
         {
-            fileContent = System.IO.File.ReadAllLines(path);
-            string[] numbers = ReadLine(0);
-            AddNodes(numbers);
+            fileContent = System.IO.File.ReadAllLines(path);            
+            AddNode(0, 0);
             Console.WriteLine("Press any key to exit.");
         }
 
@@ -29,34 +28,41 @@ namespace DB_ApplicantChallenge
             return fileContent[lineNumber].Split(SPACE);
         }
 
-        private void AddNodes(string[] numbers)
-        { 
-            int number = -1;
-            number = Int32.Parse(numbers[0]);
-            Node node = new Node(number);
-            string[] nextLine = null;
-            for (int lineNumber = 1; lineNumber < numbers.Length; lineNumber++)
+        private bool AddNode(int lineNumber, int numberIndex)
+        {
+            if (lineNumber>=fileContent.Length)
             {
-                nextLine = ReadLine(lineNumber);
-                node = AddChildren(nextLine, 0, lineNumber, node);
-                if (root==null)
+                return false;
+            }
+            string[] numbers = ReadLine(lineNumber);
+            int largestNumber = -1;
+            int index = 0;
+            int currentNumber = Int32.Parse(numbers[numberIndex]);                
+            if (isEven(currentNumber) == even && currentNumber > largestNumber)
+            {
+                largestNumber = currentNumber;
+                index = numberIndex;
+            }
+            if (numberIndex + 1 < numbers.Length)
+            {
+                currentNumber = Int32.Parse(numbers[numberIndex + 1]);
+                if (isEven(currentNumber) == even && currentNumber > largestNumber)
                 {
-                    root = node;
+                    largestNumber = currentNumber;
+                    index = numberIndex+1;
                 }
             }
+            numberIndex++;
+            path.Add(largestNumber);
+            lineNumber++;
+            even = !even;
+            AddNode(lineNumber, index);
+            return true;
         }
 
-        private Node AddChildren(string[] nextLine, int numberIndex, int lineNumber, Node parent)
+        private bool isEven(int number)
         {
-            int number = Int32.Parse(nextLine[numberIndex]);
-            Node child1 = new Node(number);
-            parent.Children.Add(child1);
-
-            number = Int32.Parse(nextLine[numberIndex + 1]);
-            Node child2 = new Node(number);
-            parent.Children.Add(child2);
-
-            return parent;
+            return (number % 2 == 0) ? true : false;
         }
     }
 }
