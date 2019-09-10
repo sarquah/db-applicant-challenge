@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DB_ApplicantChallenge
+﻿namespace DB_ApplicantChallenge
 {
     class Program
     {

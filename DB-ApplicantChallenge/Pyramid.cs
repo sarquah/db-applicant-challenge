@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DB_ApplicantChallenge
 {
-    class Pyramid
+    class Pyramid : IPyramid
     {
         private const string SPACE = " ";
         private const int RIGHT_CHILD = 1;
@@ -27,7 +26,7 @@ namespace DB_ApplicantChallenge
             }
             string[] numbers = ReadLine(lineNumber);
             int currentNumber = Int32.Parse(numbers[numberIndex]);
-            LargestNumberHelper largestNumberHelper = getLargestNumber(currentNumber, numberIndex, numbers);
+            LargestNumberHelper largestNumberHelper = GetLargestNumber(currentNumber, numberIndex, numbers);
             maxSumPath.Add(largestNumberHelper.LargestNumber);
             lineNumber++;
             even = !even;
@@ -35,16 +34,16 @@ namespace DB_ApplicantChallenge
             return true;
         }        
 
-        private string[] ReadLine(int lineNumber)
+        public string[] ReadLine(int lineNumber)
         {
             return fileContent[lineNumber].Split(SPACE);
         }
 
-        private LargestNumberHelper getLargestNumber(int currentNumber, int index, string[] numbers)
+        public LargestNumberHelper GetLargestNumber(int currentNumber, int index, string[] numbers)
         {
             int largestNumber = -1;
             // Check left child
-            if (isEven(currentNumber) == even && currentNumber > largestNumber)
+            if (IsEven(currentNumber) == even && currentNumber > largestNumber)
             {
                 largestNumber = currentNumber;
             }
@@ -52,7 +51,7 @@ namespace DB_ApplicantChallenge
             if (index + RIGHT_CHILD < numbers.Length)
             {
                 currentNumber = Int32.Parse(numbers[index + RIGHT_CHILD]);
-                if (isEven(currentNumber) == even && currentNumber > largestNumber)
+                if (IsEven(currentNumber) == even && currentNumber > largestNumber)
                 {
                     largestNumber = currentNumber;
                     index++;
@@ -61,7 +60,7 @@ namespace DB_ApplicantChallenge
             return new LargestNumberHelper(largestNumber, index);
         }
 
-        private bool isEven(int number)
+        public bool IsEven(int number)
         {
             return (number % 2 == 0) ? true : false;
         }
